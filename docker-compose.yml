@@ -1,0 +1,28 @@
+version: "3.8"
+
+services:
+  sql-server:
+    image: mcr.microsoft.com/mssql/server:2019-CU18-ubuntu-20.04
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=zaQ@123456!
+      - MSSQL_PID=Express
+    ports:
+      - target: 1433
+        published: 1433
+    volumes:
+      - ./MSSQLServer/data:/var/opt/mssql/data
+      - ./MSSQLServer/log:/var/opt/mssql/log
+
+  stripe-cli:
+    image: stripe/stripe-cli
+    env_file: environments/.stripe-env
+    environment:
+      - STRIPE_DEVICE_NAME=local
+    stdin_open: true
+    tty: true
+    entrypoint: /bin/sh
+
+networks:
+  default:
+    name: tnt-shared-network
