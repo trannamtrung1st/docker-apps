@@ -10,20 +10,26 @@ services:
       # - SA_PASSWORD=
     ports:
       - target: 1433
-        published: 1433
+        published: 1434
     volumes:
       - ./MSSQLServer/data:/var/opt/mssql/data
       - ./MSSQLServer/log:/var/opt/mssql/log
 
-  stripe-cli:
-    image: stripe/stripe-cli
-    env_file: environments/.stripe-env
-    environment:
-      - STRIPE_DEVICE_NAME=local
-      # - STRIPE_API_KEY=
-    stdin_open: true
-    tty: true
-    entrypoint: /bin/sh
+  timescaledb:
+    image: "timescale/timescaledb-ha:pg14.5-ts2.8.1-p1"
+    ports:
+      - "5432:5432"
+    env_file: environments/.postgres-env
+
+  # stripe-cli:
+  #   image: stripe/stripe-cli
+  #   env_file: environments/.stripe-env
+  #   environment:
+  #     - STRIPE_DEVICE_NAME=local
+  #     # - STRIPE_API_KEY=
+  #   stdin_open: true
+  #   tty: true
+  #   entrypoint: /bin/sh
 
 networks:
   default:
