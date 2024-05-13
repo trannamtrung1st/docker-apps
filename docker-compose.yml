@@ -16,7 +16,7 @@ services:
       - ./MSSQLServer/log:/var/opt/mssql/log
 
   # TimescaleDB
-  timescaledb1:
+  timescaledb:
     image: "timescale/timescaledb-ha:pg14-arm64"
     ports:
       - "5432:5432"
