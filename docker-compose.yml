@@ -15,10 +15,14 @@ services:
       - ./MSSQLServer/data:/var/opt/mssql/data
       - ./MSSQLServer/log:/var/opt/mssql/log
 
-  timescaledb:
-    image: "timescale/timescaledb-ha:pg14.5-ts2.8.1-p1"
+  # TimescaleDB
+  timescaledb1:
+    image: "timescale/timescaledb-ha:pg14-arm64"
     ports:
       - "5432:5432"
+    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
+    volumes:
+      - ./deployment/timescaledb/postgresql.conf:/etc/postgresql/postgresql.conf
     env_file: environments/.postgres-env
 
   mysql:
