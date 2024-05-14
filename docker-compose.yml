@@ -20,6 +20,7 @@ services:
     image: "timescale/timescaledb-ha:pg14-arm64"
     ports:
       - "5432:5432"
+    command: postgres -c 'config_file=/etc/postgresql/postgresql.conf'
     volumes:
       - ./deployment/timescaledb/postgresql.conf:/etc/postgresql/postgresql.conf
     env_file: environments/.postgres-env
